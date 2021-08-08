@@ -1,0 +1,115 @@
+Sezon	Wyścig	Klasa	Grupa	#		Nazwisko menadżera	Nazwisko kierowcy	OW	Pensja	Długość	Nazwisko dyr technicznego	OW	Pensja	Długość	OW Personelu
+83	3	Rookie	1	01.		Z.  Veselý	Laurent Larrauri	103	$1.234.567	14	-	-	-	-	5	
+83	3	Rookie	1	02.		H.  Salomon	Luiz Moreno	99	$980.000	14	-	-	-	-	4	
+83	3	Rookie	1	03.		M.  Stasiak	Yannick Duval	99	$364.000	14	-	-	-	-	4	
+83	3	Rookie	1	04.		R.  Barbosa	Tobias Winkelhock	98	$700.000	14	-	-	-	-	4	
+83	3	Rookie	1	05.		D.  Gs	Nicola La Rosa	96	$700.000	14	-	-	-	-	3	
+83	3	Rookie	1	06.		L.  Špaček	Kamui Hirate	94	$700.000	14	-	-	-	-	6	
+83	3	Rookie	1	07.		F.  Marek	Luiz Barrichello	92	$800.000	14	-	-	-	-	5	
+83	3	Rookie	1	08.		M.  Loro	Hans Furchheim	92	$395.000	1	-	-	-	-	14	
+83	3	Rookie	1	09.		Y.  Sated	Michele Modena	92	$691.001	14	-	-	-	-	4	
+83	3	Rookie	1	10.		S.  Purificação	Giovanna Martini	90	$457.520	14	-	-	-	-	3	
+83	3	Rookie	1	11.		Z.  Lipcsey	Damon Galica	89	$425.000	14	-	-	-	-	3	
+83	3	Rookie	1	12.		F.  Lorenčič	Dennis Danner	88	$627.200	14	-	-	-	-	8	
+83	3	Rookie	1	13.		T.  Suoanttila	Brian Walker F	88	$700.000	15	-	-	-	-	3	
+83	3	Rookie	1	14.		D.  Millet	Hans-Joachim Wittmann	88	$500.000	13	-	-	-	-	14	
+83	3	Rookie	1	15.		T.  Haake	Bruno Proetto	88	$550.000	4	-	-	-	-	5	
+83	3	Rookie	1	16.		J.  Jirůšek	Gerard Max	87	$895.100	9	-	-	-	-	4	
+83	3	Rookie	1	17.		O.  Usta	Nigel Mather	86	$500.000	13	-	-	-	-	3	
+83	3	Rookie	1	18.		A.  Florindo	Alex Clucas	85	$415.000	14	-	-	-	-	3	
+83	3	Rookie	1	19.		M.  Schiener	Marcus Palm R	84	$615.000	14	-	-	-	-	8	
+83	3	Rookie	1	20.		D.  Molyneux	Claudio Amati	84	$450.000	14	-	-	-	-	6	
+83	3	Rookie	1	21.		C.  Cugowski	Tom Hankey	84	$655.000	14	-	-	-	-	5	
+83	3	Rookie	1	22.		D.  Gregorio	Damien Boullion	83	$1.068.000	8	-	-	-	-	3	
+83	3	Rookie	1	23.		F.  Oliveira	Daniel Perkins	80	$470.000	14	-	-	-	-	3	
+83	3	Rookie	1	24.		A.  Esteves	Yann Montagny	75	$2.179.598	8	-	-	-	-	3	
+83	3	Rookie	1	25.		B.  Silvestri	Michael Rudersdorf	45	$220.000	16	-	-	-	-	4	
+83	3	Rookie	1	26.		T.  Reccia	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	1	27.		A.  Palombo	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	1	28.		J.  Cottret	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	2	01.		I.  Hernandez	Gary Legge	102	$1.200.000	14	-	-	-	-	5	
+83	3	Rookie	2	02.		J.  Anderson	Nico Zeller	100	$900.000	14	-	-	-	-	6	
+83	3	Rookie	2	03.		D.  Miranda	Marco Francia	96	$415.000	14	-	-	-	-	3	
+83	3	Rookie	2	04.		M.  Cau	Nico Vettel	94	$630.000	12	-	-	-	-	3	
+83	3	Rookie	2	05.		A.  Hughes	Justin Stewart	93	$320.000	3	-	-	-	-	11	
+83	3	Rookie	2	06.		D.  Silva	Luciano Barrichello	93	$942.735	14	-	-	-	-	5	
+83	3	Rookie	2	07.		C.  Mihai	Jörg Müller	91	$1.000.000	14	-	-	-	-	3	
+83	3	Rookie	2	08.		V.  Rodrigues	Justin Carroll	91	$750.000	14	-	-	-	-	3	
+83	3	Rookie	2	09.		M.  Jevremovic	Stoffel Heylen	91	$426.018	14	-	-	-	-	3	
+83	3	Rookie	2	10.		V.  Kumar	Joachim Winkelhock	90	$603.250	14	-	-	-	-	14	
+83	3	Rookie	2	11.		A.  Lodi	Hans-Joachim Hofbauer	90	$469.089	14	-	-	-	-	6	
+83	3	Rookie	2	12.		A.  G.	Mauro Schiattarella	90	$550.000	14	-	-	-	-	3	
+83	3	Rookie	2	13.		W.  Chen Siu	Thomas Danner	87	$390.000	16	-	-	-	-	3	
+83	3	Rookie	2	14.		R.  Lopes	Gianfranco Facetti	87	$749.794	15	-	-	-	-	3	
+83	3	Rookie	2	15.		O.  Amurao	Guy Kimber-Smith	87	$400.000	14	-	-	-	-	6	
+83	3	Rookie	2	16.		D.  Preece	Giovanni Liuzzi	87	$605.000	14	-	-	-	-	5	
+83	3	Rookie	2	17.		F.  Lemgruber	Perry Williamson	85	$395.628	14	-	-	-	-	4	
+83	3	Rookie	2	18.		P.  Mitsopoulos	Vic Kennedy	85	$658.000	14	-	-	-	-	7	
+83	3	Rookie	2	19.		C.  Cismas Bercse	Michele Barbazza	84	$415.000	14	-	-	-	-	5	
+83	3	Rookie	2	20.		L.  Trakovicky	Lewis Beuttler	84	$500.000	14	-	-	-	-	3	
+83	3	Rookie	2	21.		K.  Ontuga	Natalia Szczerbinski	84	$395.000	13	-	-	-	-	4	
+83	3	Rookie	2	22.		C.  Berthi	Gianfranco Pirro	83	$692.612	14	-	-	-	-	3	
+83	3	Rookie	2	23.		C.  Blomquist	Damien Acheson F	82	$1.020.000	8	-	-	-	-	3	
+83	3	Rookie	2	24.		J.  Mills	Francois Pasini	81	$1.008.000	9	-	-	-	-	3	
+83	3	Rookie	2	25.		S.  Brito	Damien Panis	77	$960.000	7	-	-	-	-	3	
+83	3	Rookie	2	26.		F.  Vieira	Divina Hill F	58	$280.000	2	-	-	-	-	4	
+83	3	Rookie	2	27.		N.  Adinalag	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	2	28.		J.  Boon	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	2	29.		J.  Curbelo Sanz	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	3	01.		M.  Chiappano	Anthony Hill	98	$729.065	14	-	-	-	-	3	
+83	3	Rookie	3	02.		R.  Rodriguez	Justin Mcnish	97	$477.662	13	-	-	-	-	3	
+83	3	Rookie	3	03.		V.  Simagin	Michael Leinders	96	$837.763	13	-	-	-	-	6	
+83	3	Rookie	3	04.		C.  Mogan	Ian Warwick	96	$750.000	14	-	-	-	-	10	
+83	3	Rookie	3	05.		C.  Kallin	Gus Kite	93	$358.400	16	-	-	-	-	10	
+83	3	Rookie	3	06.		B.  Poli	Will Power	91	$1.500.000	14	-	-	-	-	5	
+83	3	Rookie	3	07.		P.  Stephan	Aurelian Dumitrescu	90	$500.000	14	-	-	-	-	4	
+83	3	Rookie	3	08.		Á.  Pérez De Dios	Domenico Latif	90	$410.000	14	-	-	-	-	4	
+83	3	Rookie	3	09.		L.  Hanzelka	Patryk Kornacki	89	$1.000.005	14	-	-	-	-	3	
+83	3	Rookie	3	10.		S.  Nation	Jaap Van Lagen	88	$500.000	14	-	-	-	-	3	
+83	3	Rookie	3	11.		I.  Sepsetto	Julia Kath	87	$380.000	9	-	-	-	-	11	
+83	3	Rookie	3	12.		K.  Tamme	Raul Calos Pace	85	$700.000	14	-	-	-	-	3	
+83	3	Rookie	3	13.		J.  Mazzi	Rupert Keegan	85	$712.304	14	-	-	-	-	4	
+83	3	Rookie	3	14.		I.  Po	Neel Grosjean	84	$948.000	7	-	-	-	-	3	
+83	3	Rookie	3	15.		K.  Kaushik	Marco Naspetti	82	$972.000	8	-	-	-	-	4	
+83	3	Rookie	3	16.		M.  Moaktmoakt	Ronnie Nilsson	81	$996.000	3	-	-	-	-	3	
+83	3	Rookie	3	17.		Á.  Dukai	Francois Duval	81	$1.044.000	10	-	-	-	-	4	
+83	3	Rookie	3	18.		P.  Beswick	Marco Paletti	80	$960.000	7	-	-	-	-	3	
+83	3	Rookie	3	19.		H.  Hughes	Jörg Winkelhock	80	$1.008.000	4	-	-	-	-	3	
+83	3	Rookie	3	20.		T.  Matjila	Bryan Vasser	80	$984.000	7	-	-	-	-	3	
+83	3	Rookie	3	21.		E.  Dominguez	Skip Barron	78	$500.000	14	-	-	-	-	9	
+83	3	Rookie	3	22.		D.  Neary	Stefano Quintarelli	75	$972.000	8	-	-	-	-	3	
+83	3	Rookie	3	23.		V.  Alexandrov	Costi Porcisteanu	74	$2.064.079	12	-	-	-	-	3	
+83	3	Rookie	3	24.		J.  Chirinos	Jean-Denis Moser	71	$864.000	1	-	-	-	-	3	
+83	3	Rookie	3	25.		A.  Garrido	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	3	26.		G.  Lukács	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	3	27.		K.  Särkkä	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	4	01.		M.  Scali	Robbie Sutcliffe	98	$1.641.068	14	-	-	-	-	6	
+83	3	Rookie	4	02.		A.  Piccio	William Irvine	97	$1.425.000	14	-	-	-	-	6	
+83	3	Rookie	4	03.		S.  Mansilla	Tomas Montanari	95	$350.000	14	-	-	-	-	3	
+83	3	Rookie	4	04.		E.  Scafuro	Mark Antinucci F	94	$600.000	14	-	-	-	-	15	
+83	3	Rookie	4	05.		M.  Jan	Chris Elford	94	$438.909	14	-	-	-	-	3	
+83	3	Rookie	4	06.		R.  Conessa	Pierre Hülkenberg	94	$898.000	14	-	-	-	-	10	
+83	3	Rookie	4	07.		A.  Martez	Keke Raikkonen	94	$505.000	14	-	-	-	-	3	
+83	3	Rookie	4	08.		P.  Bruneau	Hernando Ribeiro	92	$430.000	15	-	-	-	-	6	
+83	3	Rookie	4	09.		M.  Camacho	Aurelian Andronache	90	$850.000	14	-	-	-	-	3	
+83	3	Rookie	4	10.		R.  Harvey	Lewis Morgan	89	$397.600	14	-	-	-	-	6	
+83	3	Rookie	4	11.		B.  Mihályi	Stephen Jelley	88	$624.828	5	-	-	-	-	8	
+83	3	Rookie	4	12.		E.  Senior	Jean-Marc Prost	88	$420.000	14	-	-	-	-	6	
+83	3	Rookie	4	13.		L.  Mendes	Alan Brabham	88	$800.000	14	-	-	-	-	4	
+83	3	Rookie	4	14.		I.  Böcskei	Steven Watson	87	$405.160	14	-	-	-	-	3	
+83	3	Rookie	4	15.		J.  Silva	Jean Prost	87	$900.000	14	-	-	-	-	3	
+83	3	Rookie	4	16.		A.  Achwerdiew	Alex Garcia	84	$1.075.200	15	-	-	-	-	3	
+83	3	Rookie	4	17.		M.  Stivala	Taki Ihara	83	$996.000	7	-	-	-	-	3	
+83	3	Rookie	4	18.		J.  Tralamazza	Michael Weidler	83	$530.904	17	-	-	-	-	3	
+83	3	Rookie	4	19.		M.  Baciu	Riccardo Trulli	81	$996.000	15	-	-	-	-	3	
+83	3	Rookie	4	20.		R.  Mctarsney Jr.	Kenny Redman	81	$600.000	16	-	-	-	-	3	
+83	3	Rookie	4	21.		S.  Aggiato	Gilles Tinguely	80	$2.355.734	8	-	-	-	-	3	
+83	3	Rookie	4	22.		Y.  Rykov	Matteo Gabbiani	80	$350.000	16	-	-	-	-	10	
+83	3	Rookie	4	23.		A.  Katakam	Brett Foyt Iv	78	$900.000	7	-	-	-	-	3	
+83	3	Rookie	4	24.		G.  Bachoco	Bernhard Lauda	76	$375.000	12	-	-	-	-	4	
+83	3	Rookie	4	25.		S.  Voggenreither	Nick Warwick	72	$690.838	14	-	-	-	-	3	
+83	3	Rookie	4	26.		T.  Báder	Dario Needell	69	$2.079.494	15	-	-	-	-	11	
+83	3	Rookie	4	27.		J.  Brouwer	Domenico Larini	67	$275.000	15	-	-	-	-	5	
+83	3	Rookie	4	28.		Á.  Winkler	Sakon Ihara	64	$305.000	16	-	-	-	-	3	
+83	3	Rookie	4	29.		J.  Makkonen	-	-	-	-	-	-	-	-	3	
+83	3	Rookie	4	30.		H.  Moser	-	-	-	-	-	-	-	-	3	

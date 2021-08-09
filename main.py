@@ -829,3 +829,29 @@ def money_levels():
             group_no = 1
         driver.find_element_by_class_name("next").click()
 
+konsola = 1
+while konsola != "0":
+    konsola = input("Wpisz komende\n[1] RichDad\n[2] BestFans\
+                    \n[3] Wydatki\n[4] Personel\n[5] MoneyLevels\n[6] Sponsorzy menedżerów\n:")
+    if konsola == "1":
+        print("uruchamiam funkcje rich")
+        rich()
+    if konsola == "2":
+        print("uruchamiam funkcje bestfans")
+        best_cars()
+    if konsola == "3":
+        print("uruchamiam funkcje wydatki")
+        expenses()
+    if konsola == "4":
+        print("uruchamiam funkcje personel")
+        view_staff()
+    if konsola == "5":
+        print("uruchamiam funkcje moneylevels")
+        money_levels()
+    if konsola == "6":
+        print("uruchamiam funkcje sponsorzymenedzerow")
+        man_sponsors()
+    else:
+        print("Wpisz wlasciwy numer")
+
+print("Koniec programu")

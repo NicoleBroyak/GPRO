@@ -439,7 +439,311 @@ def expenses():
         countall = 0
 
 
-expenses()
-rich()
-view_staff()
-best_cars()
+def man_sponsors():
+    group = "Rookie"
+    season = "83"
+    race = "3"
+    file = open("ManSponsors.txt", "w")
+    file.write("")
+    file.close()
+    for group_no in range(1, 151):
+        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
+            .format(group, group_no)
+        page = requests.get(url)
+        print(url)
+
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            if 4 <= count <= 8 or count == 15:
+                file = open("ManSponsors.txt", "a")
+                file.write(tr.text.strip())
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if 9 <= count <= 14:
+                script = str(tr.find("script"))
+                lvl = (script[48:49])
+                lvl = int(lvl) + 1
+                file = open("ManSponsors.txt", "a")
+                file.write(str(lvl))
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if count == 16:
+                # print('')
+                count = 0
+                file = open("ManSponsors.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+    group = "Amateur"
+    for group_no in range(1, 81):
+        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
+            .format(group, group_no)
+        page = requests.get(url)
+        print(url)
+
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            if 4 <= count <= 8 or count == 15:
+                file = open("ManSponsors.txt", "a")
+                file.write(tr.text.strip())
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if 9 <= count <= 14:
+                script = str(tr.find("script"))
+                lvl = (script[48:49])
+                lvl = int(lvl) + 1
+                file = open("ManSponsors.txt", "a")
+                file.write(str(lvl))
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if count == 16:
+                # print('')
+                count = 0
+                file = open("ManSponsors.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+    group = "Pro"
+    for group_no in range(1, 26):
+        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
+            .format(group, group_no)
+        page = requests.get(url)
+        print(url)
+
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            if 4 <= count <= 8 or count == 15:
+                file = open("ManSponsors.txt", "a")
+                file.write(tr.text.strip())
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if 9 <= count <= 14:
+                script = str(tr.find("script"))
+                lvl = (script[48:49])
+                lvl = int(lvl) + 1
+                file = open("ManSponsors.txt", "a")
+                file.write(str(lvl))
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if count == 16:
+                # print('')
+                count = 0
+                file = open("ManSponsors.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+    group = "Master"
+    for group_no in range(1, 6):
+        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
+            .format(group, group_no)
+        page = requests.get(url)
+        print(url)
+
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            if 4 <= count <= 8 or count == 15:
+                file = open("ManSponsors.txt", "a")
+                file.write(tr.text.strip())
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if 9 <= count <= 14:
+                script = str(tr.find("script"))
+                lvl = (script[48:49])
+                lvl = int(lvl) + 1
+                file = open("ManSponsors.txt", "a")
+                file.write(str(lvl))
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if count == 16:
+                # print('')
+                count = 0
+                file = open("ManSponsors.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+    group = "Elite"
+    for group_no in range(1, 2):
+        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
+            .format(group, group_no)
+        page = requests.get(url)
+        print(url)
+
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("ManSponsors.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            if 4 <= count <= 8 or count == 15:
+                file = open("ManSponsors.txt", "a")
+                file.write(tr.text.strip())
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if 9 <= count <= 14:
+                script = str(tr.find("script"))
+                lvl = (script[48:49])
+                lvl = int(lvl) + 1
+                file = open("ManSponsors.txt", "a")
+                file.write(str(lvl))
+                file.write('\t')
+                file.close()
+                # print(tr.text.strip(), end='\t')
+                count += 1
+            if count == 16:
+                # print('')
+                count = 0
+                file = open("ManSponsors.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+
+man_sponsors()

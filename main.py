@@ -1,5 +1,9 @@
 import requests
+from selenium import webdriver
 from bs4 import BeautifulSoup
+import mechanize
+import urllib3
+import http.cookiejar
 
 
 def best_cars():
@@ -746,4 +750,82 @@ def man_sponsors():
                 file.close()
         group_no += 1
 
-man_sponsors()
+def money_levels():
+    group = "Elite"
+    season = "83"
+    race = "3"
+    group_no = 1
+    file = open("MoneyLevels.txt", "w")
+    user = input("User")
+    password = input("Pass")
+    file.write('Sezon\tWyścig\tKlasa\tGrupa\t#\t\tNazwisko menadżera\tNazwisko '
+               'kierowcy\tOW\tPensja\tDługość\tNazwisko dyr technicznego\tOW\t'
+               'Pensja\tDługość\tOW Personelu\n')
+    driver = webdriver.Chrome()
+    driver.get("https://gpro.net/pl/Login.asp?Redirect=MoneyLevels.asp")
+    driver.find_element_by_name("textLogin").send_keys(user)
+    driver.find_element_by_name("textPassword").send_keys(password)
+    driver.find_element_by_name("LogonFake").click()
+    file.close()
+    for group_all in range(1, 262):
+        with open('page.html', 'w') as f:
+            f.write(driver.page_source)
+        p = open('page.html', 'r')
+        page = p.read()
+
+        soup = BeautifulSoup(page, "html.parser")
+        tds = soup.find_all("td")
+        count = 0
+        for tr in tds:
+            if count == 0:
+                # print(season + '\t')
+                count += 1
+                file = open("MoneyLevels.txt", "a")
+                file.write('{}\t'.format(season))
+                file.close()
+            if count == 1:
+                # print(race + '\t')
+                count += 1
+                file = open("MoneyLevels.txt", "a")
+                file.write('{}\t'.format(race))
+                file.close()
+            if count == 2:
+                # print("{} \t".format(group))
+                count += 1
+                file = open("MoneyLevels.txt", "a")
+                file.write('{}\t'.format(group))
+                file.close()
+            if count == 3:
+                # print("{} \t".format(group_no))
+                count += 1
+                file = open("MoneyLevels.txt", "a")
+                file.write('{}\t'.format(group_no))
+                file.close()
+            soup.find("tr")
+            file = open("MoneyLevels.txt", "a")
+            file.write(tr.text.strip())
+            file.write('\t')
+            file.close()
+            # print(tr.text.strip(), end='\t')
+            count += 1
+            if count == 12:
+                # print('')
+                count = 0
+                file = open("MoneyLevels.txt", "a")
+                file.write('\n')
+                file.close()
+        group_no += 1
+        if group_all == 1:
+            group = "Master"
+            group_no = 1
+        if group_all == 6:
+            group = "Pro"
+            group_no = 1
+        if group_all == 31:
+            group = "Amateur"
+            group_no = 1
+        if group_all == 111:
+            group = "Rookie"
+            group_no = 1
+        driver.find_element_by_class_name("next").click()
+

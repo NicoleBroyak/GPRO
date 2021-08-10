@@ -829,6 +829,32 @@ def money_levels():
             group_no = 1
         driver.find_element_by_class_name("next").click()
 
+def analiza():
+    user = input("User")
+    password = input("Pass")
+    driver = webdriver.Chrome()
+    driver.get("https://gpro.net/pl/Login.asp?Redirect=RaceAnalysis.asp")
+    driver.find_element_by_name("textLogin").send_keys(user)
+    driver.find_element_by_name("textPassword").send_keys(password)
+    driver.find_element_by_name("LogonFake").click()
+    file = open("page.html", "w")
+    with open('page.html', 'w') as file:
+        file.write(driver.page_source)
+        file.close
+    p = open('page.html', 'r')
+    page = p.read()
+    soup = BeautifulSoup(page, "html.parser")
+    tds = soup.find_all("td")
+    for tr in tds:
+        file = open("Analiza.txt", "a")
+        soup.find("tr")
+        file.write(tr.text.strip())
+        file.write('\n')
+        file.close()
+    file = open("Analiza1.txt", "a")
+    file.write(soup.text.strip())
+    file.close()
+
 konsola = 1
 while konsola != "0":
     konsola = input("Wpisz komende\n[1] RichDad\n[2] BestFans\
@@ -851,6 +877,15 @@ while konsola != "0":
     if konsola == "6":
         print("uruchamiam funkcje sponsorzymenedzerow")
         man_sponsors()
+    if konsola == "7":
+        print("uruchamiam funkcje analiza")
+        analiza()
+    if konsola == "9":
+        rich()
+        best_cars()
+        man_sponsors()
+        expenses()
+        view_staff()
     else:
         print("Wpisz wlasciwy numer")
 

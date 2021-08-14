@@ -112,7 +112,7 @@ def best_cars():
                 except OSError:
                     logging.error("Error")
                 count = 0
-        print(page_no)
+        print(f"Pobieranie strony bestcars.asp nr {page_no}/{max_pageno - 1}")
         page_no += 1
         countall = 0
 
@@ -133,7 +133,7 @@ def view_staff():
         url = str(f"https://gpro.net/pl/ViewStaff.asp?group={group} "
                   f"- {group_no}")
         page = requests.get(url)
-        print(url)
+        print(f"Pobieranie strony {url}")
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -145,7 +145,7 @@ def view_staff():
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
             .format(group, group_no)
         page = requests.get(url)
-        print(url)
+        print(f"Pobieranie strony {url}")
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -157,7 +157,7 @@ def view_staff():
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
             .format(group, group_no)
         page = requests.get(url)
-        print(url)
+        print(f"Pobieranie strony {url}")
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -169,7 +169,7 @@ def view_staff():
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
             .format(group, group_no)
         page = requests.get(url)
-        print(url)
+        print(f"Pobieranie strony {url}")
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -181,7 +181,7 @@ def view_staff():
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
             .format(group, group_no)
         page = requests.get(url)
-        print(url)
+        print(f"Pobieranie strony {url}")
 
         soup = BeautifulSoup(page.content, "html.parser")
 
@@ -191,11 +191,12 @@ def view_staff():
 
 
 def rich():
-    season = "83"
-    race = "3"
-    file = open("Rich.txt", "w")
-    file.write("")
-    file.close()
+    file_path = pathlib.Path("Rich.csv")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write(f"Sezon,Wyścig,Poz.,Nazwisko,Grupa,Budżet\n")
+    except OSError:
+        logging.error("Error")
     url = "https://gpro.net/pl/Stats.asp?type=richmanagers&Page=1"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -206,8 +207,9 @@ def rich():
     count = 0
     countall = 0
     for page_no in range(1, max_pageno):
-        url = "https://gpro.net/pl/Stats.asp?type=" \
-              "richmanagers&Page={}".format(page_no)
+        url = str(f"""
+                https://gpro.net/pl/Stats.asp?type=richmanagers&Page={page_no}
+                """)
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "html.parser")
         tbs = soup.find(id="Table16")
@@ -216,31 +218,43 @@ def rich():
             if countall < 4:
                 countall += 1
                 continue
-            tbs.find("tr")
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("Rich.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("Rich.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            file = open("Rich.txt", "a")
-            file.write(tr.text.strip())
-            file.write("\t")
-            file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},")
+                except OSError:
+                    logging.error("Error")
+            tbs.find("tr")
+            if count == 3:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(tr.text.strip().replace(".","").\
+                                   replace("$",""))
+                except OSError:
+                    logging.error("Error")
+            else:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(tr.text.strip())
+                except OSError:
+                    logging.error("Error")
+            if count != 3:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(",")
+                except OSError:
+                    logging.error("Error")
             count += 1
             countall += 1
-            if count == 6:
-                file = open("Rich.txt", "a")
-                file.write("\n")
-                file.close()
+            if count == 4:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-        print(page_no)
+        print(f"Pobieranie strony rich.asp nr {page_no}/{max_pageno - 1}")
         page_no += 1
         countall = 0
 

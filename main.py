@@ -48,12 +48,12 @@ def best_cars():
                 count += 1
                 try:
                     with file_path.open(mode="a") as file:
-                        file.write(f"{wyscig},")
+                        file.write(f"{wyscig}.{dane},")
                 except OSError:
                     logging.error("Error")
             if count <= 5:
                 try:
-                    with file_path.open(mode="a", encoding=encoding) as file:
+                    with file_path.open(mode="a", encoding="utf-8") as file:
                         file.write(tr.text.strip())
                         if count != 4:
                             file.write(",")
@@ -869,11 +869,15 @@ def analiza():
 
 sezon = input("Wpisz nr sezonu")
 wyscig = input("Wpisz nr wyscigu")
-encoding = input("Wpisz rodzaj kodowania np. 'utf_8':")
+dane = input("Wpisz moment zapisywania danych [1]"
+             " Po rynku\n[2] Po kwalach\n[3] Po resecie"
+             "\n[x] inny (wpisz zamiast x)\n:")
 konsola = 1
 while konsola != "0":
     konsola = input("Wpisz komende\n[1] RichDad\n[2] BestFans\
-                    \n[3] Wydatki\n[4] Personel\n[5] MoneyLevels\n[6] Sponsorzy menedżerów\n:")
+                    \n[3] Wydatki\n[4] Personel\n[5] MoneyLevels\n"
+                    "[6] Sponsorzy menedżerów\n[9] Wszystko bez logowania"
+                    "\n[0] Wyjdź\n:")
     if konsola == "1":
         print("uruchamiam funkcje rich")
         rich()

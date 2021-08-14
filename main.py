@@ -53,7 +53,7 @@ def best_cars():
                     logging.error("Error")
             if count <= 5:
                 try:
-                    with file_path.open(mode="a", encoding="utf_8") as file:
+                    with file_path.open(mode="a", encoding=encoding) as file:
                         file.write(tr.text.strip())
                         if count != 4:
                             file.write(",")
@@ -869,6 +869,7 @@ def analiza():
 
 sezon = input("Wpisz nr sezonu")
 wyscig = input("Wpisz nr wyscigu")
+encoding = input("Wpisz rodzaj kodowania np. 'utf_8':")
 konsola = 1
 while konsola != "0":
     konsola = input("Wpisz komende\n[1] RichDad\n[2] BestFans\

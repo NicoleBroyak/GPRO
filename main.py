@@ -300,14 +300,14 @@ def expenses():
             tbs.find("tr")
             if count == 3:
                 try:
-                    with file_path.open(mode="a") as file:
+                    with file_path.open(mode="a", encoding="utf-8") as file:
                         file.write(tr.text.strip().replace(".", "").
                                    replace("$", ""))
                 except OSError:
                     logging.error("Error")
             else:
                 try:
-                    with file_path.open(mode="a") as file:
+                    with file_path.open(mode="a", encoding="utf-8") as file:
                         file.write(tr.text.strip())
                 except OSError:
                     logging.error("Error")
@@ -335,12 +335,16 @@ def man_sponsors():
     group = "Rookie"
     season = "83"
     race = "3"
-    file = open("ManSponsors.txt", "w")
-    file.write("")
-    file.close()
+    file_path = pathlib.Path("ManSponsors.csv")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write("Sezon,Wyścig,Grupa,Nazwisko,Sponsor,Finanse,Oczekiwania"
+                       ",Cierpliwość,Reputacja,Wizerunek"
+                       ",Negocjacje,Czastrwania\n")
+    except OSError:
+        logging.error("Error")
     for group_no in range(1, 151):
-        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
-            .format(group, group_no)
+        url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
         print(url)
 
@@ -350,57 +354,48 @@ def man_sponsors():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
+                count += 4
             if 4 <= count <= 8 or count == 15:
-                file = open("ManSponsors.txt", "a")
-                file.write(tr.text.strip())
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                if count != 4 and count != 5:
+                    try:
+                        with file_path.open(mode="a", encoding="utf-8") as file:
+                            file.write(f"{tr.text.strip()}")
+                    except OSError:
+                        logging.error("Error")
+                    if count == 6 or count == 7:
+                        try:
+                            with file_path.open(mode="a") as file:
+                                file.write(",")
+                        except OSError:
+                            logging.error("Error")
                 count += 1
             if 9 <= count <= 14:
                 script = str(tr.find("script"))
                 lvl = (script[48:49])
                 lvl = int(lvl) + 1
-                file = open("ManSponsors.txt", "a")
-                file.write(str(lvl))
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(f"{str(lvl)},")
+                except OSError:
+                    logging.error("Error")
                 count += 1
             if count == 16:
-                # print('')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-                file = open("ManSponsors.txt", "a")
-                file.write('\n')
-                file.close()
         group_no += 1
     group = "Amateur"
     for group_no in range(1, 81):
-        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
-            .format(group, group_no)
+        url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
         print(url)
 
@@ -410,57 +405,48 @@ def man_sponsors():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
+                count += 4
             if 4 <= count <= 8 or count == 15:
-                file = open("ManSponsors.txt", "a")
-                file.write(tr.text.strip())
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                if count != 4 and count != 5:
+                    try:
+                        with file_path.open(mode="a", encoding="utf-8") as file:
+                            file.write(f"{tr.text.strip()}")
+                    except OSError:
+                        logging.error("Error")
+                    if count == 6 or count == 7:
+                        try:
+                            with file_path.open(mode="a") as file:
+                                file.write(",")
+                        except OSError:
+                            logging.error("Error")
                 count += 1
             if 9 <= count <= 14:
                 script = str(tr.find("script"))
                 lvl = (script[48:49])
                 lvl = int(lvl) + 1
-                file = open("ManSponsors.txt", "a")
-                file.write(str(lvl))
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(f"{str(lvl)},")
+                except OSError:
+                    logging.error("Error")
                 count += 1
             if count == 16:
-                # print('')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-                file = open("ManSponsors.txt", "a")
-                file.write('\n')
-                file.close()
         group_no += 1
     group = "Pro"
     for group_no in range(1, 26):
-        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
-            .format(group, group_no)
+        url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
         print(url)
 
@@ -470,57 +456,48 @@ def man_sponsors():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
+                count += 4
             if 4 <= count <= 8 or count == 15:
-                file = open("ManSponsors.txt", "a")
-                file.write(tr.text.strip())
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                if count != 4 and count != 5:
+                    try:
+                        with file_path.open(mode="a", encoding="utf-8") as file:
+                            file.write(f"{tr.text.strip()}")
+                    except OSError:
+                        logging.error("Error")
+                    if count == 6 or count == 7:
+                        try:
+                            with file_path.open(mode="a") as file:
+                                file.write(",")
+                        except OSError:
+                            logging.error("Error")
                 count += 1
             if 9 <= count <= 14:
                 script = str(tr.find("script"))
                 lvl = (script[48:49])
                 lvl = int(lvl) + 1
-                file = open("ManSponsors.txt", "a")
-                file.write(str(lvl))
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(f"{str(lvl)},")
+                except OSError:
+                    logging.error("Error")
                 count += 1
             if count == 16:
-                # print('')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-                file = open("ManSponsors.txt", "a")
-                file.write('\n')
-                file.close()
         group_no += 1
     group = "Master"
     for group_no in range(1, 6):
-        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
-            .format(group, group_no)
+        url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
         print(url)
 
@@ -530,57 +507,48 @@ def man_sponsors():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
+                count += 4
             if 4 <= count <= 8 or count == 15:
-                file = open("ManSponsors.txt", "a")
-                file.write(tr.text.strip())
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                if count != 4 and count != 5:
+                    try:
+                        with file_path.open(mode="a", encoding="utf-8") as file:
+                            file.write(f"{tr.text.strip()}")
+                    except OSError:
+                        logging.error("Error")
+                    if count == 6 or count == 7:
+                        try:
+                            with file_path.open(mode="a") as file:
+                                file.write(",")
+                        except OSError:
+                            logging.error("Error")
                 count += 1
             if 9 <= count <= 14:
                 script = str(tr.find("script"))
                 lvl = (script[48:49])
                 lvl = int(lvl) + 1
-                file = open("ManSponsors.txt", "a")
-                file.write(str(lvl))
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(f"{str(lvl)},")
+                except OSError:
+                    logging.error("Error")
                 count += 1
             if count == 16:
-                # print('')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-                file = open("ManSponsors.txt", "a")
-                file.write('\n')
-                file.close()
         group_no += 1
     group = "Elite"
     for group_no in range(1, 2):
-        url = "https://gpro.net/pl/ManSponsors.asp?group={} - {}" \
-            .format(group, group_no)
+        url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
         print(url)
 
@@ -590,52 +558,44 @@ def man_sponsors():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ManSponsors.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
+                count += 4
             if 4 <= count <= 8 or count == 15:
-                file = open("ManSponsors.txt", "a")
-                file.write(tr.text.strip())
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                if count != 4 and count != 5:
+                    try:
+                        with file_path.open(mode="a", encoding="utf-8") as file:
+                            file.write(f"{tr.text.strip()}")
+                    except OSError:
+                        logging.error("Error")
+                    if count == 6 or count == 7:
+                        try:
+                            with file_path.open(mode="a") as file:
+                                file.write(",")
+                        except OSError:
+                            logging.error("Error")
                 count += 1
             if 9 <= count <= 14:
                 script = str(tr.find("script"))
                 lvl = (script[48:49])
                 lvl = int(lvl) + 1
-                file = open("ManSponsors.txt", "a")
-                file.write(str(lvl))
-                file.write('\t')
-                file.close()
-                # print(tr.text.strip(), end='\t')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(f"{str(lvl)},")
+                except OSError:
+                    logging.error("Error")
                 count += 1
             if count == 16:
-                # print('')
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-                file = open("ManSponsors.txt", "a")
-                file.write('\n')
-                file.close()
         group_no += 1
 
 
@@ -781,7 +741,7 @@ while konsola != "0":
         man_sponsors()
         expenses()
         view_staff()
+    if konsola == "0":
+        print("Koniec programu")
     else:
         print("Wpisz wlasciwy numer")
-
-print("Koniec programu")

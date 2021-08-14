@@ -5,6 +5,39 @@ import pathlib
 import logging
 
 
+def view_staff_file(tds, count, file_path, group, group_no, soup):
+    for tr in tds:
+        if count == 0:
+            try:
+                with file_path.open(mode="a") as file:
+                    file.write(f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+            except OSError:
+                logging.error("Error")
+            soup.find("tr")
+        soup.find("tr")
+        if count > 1:
+            try:
+                with file_path.open(mode="a", encoding="utf-8") as file:
+                        file.write(f"{tr.text.strip()}")
+            except OSError:
+                logging.error("Error")
+            if count != 11:
+                try:
+                    with file_path.open(mode="a", encoding="utf-8") as file:
+                        file.write(",")
+                except OSError:
+                    logging.error("Error")
+        count += 1
+        if count == 12:
+            count = 0
+            try:
+                with file_path.open(mode="a") as file:
+                    file.write("\n")
+            except OSError:
+                logging.error("Error")
+    group_no += 1
+
+
 def best_cars():
     lvl = 0
     file_path = pathlib.Path("BestCars.csv")
@@ -12,7 +45,7 @@ def best_cars():
         with file_path.open(mode="w") as file:
             file.write(f"Sezon,Wyścig,Poz.,Nazwisko,Grupa,lvl\n")
     except OSError:
-        logging.error("Error11")
+        logging.error("Error")
     url = "https://gpro.net/pl/Stats.asp?type=bestcars&Page=1"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -85,17 +118,20 @@ def best_cars():
 
 
 def view_staff():
-    season = "83"
-    race = "3"
+
     group = "Rookie"
-    file = open("ViewStaff.txt", "w")
-    file.write('Sezon\tWyścig\tKlasa\tGrupa\t#\t\tNazwisko menadżera\tNazwisko '
-               'kierowcy\tOW\tPensja\tDługość\tNazwisko dyr technicznego\tOW\t'
-               'Pensja\tDługość\tOW Personelu\n')
-    file.close()
+    file_path = pathlib.Path("ViewStaff.csv")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write('Sezon,Wyścig,Grupa,'
+                       'Nazwisko menadżera,Nazwisko '
+               'kierowcy,OW,Pensja,Długość,Nazwisko dyr technicznego,OW,'
+               'Pensja,Długość,OW Personelu\n')
+    except OSError:
+        logging.error("Error")
     for group_no in range(1, 151):
-        url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}" \
-            .format(group, group_no)
+        url = str(f"https://gpro.net/pl/ViewStaff.asp?group={group} "
+                  f"- {group_no}")
         page = requests.get(url)
         print(url)
 
@@ -103,45 +139,7 @@ def view_staff():
 
         tds = soup.find_all("td")
         count = 0
-        for tr in tds:
-            if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
-            soup.find("tr")
-            file = open("ViewStaff.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
-            count += 1
-            if count == 16:
-                # print('')
-                count = 0
-                file = open("ViewStaff.txt", "a")
-                file.write('\n')
-                file.close()
-        group_no += 1
+        view_staff_file(tds, count, file_path, group, group_no, soup)
     group = "Amateur"
     for group_no in range(1, 81):
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
@@ -153,45 +151,7 @@ def view_staff():
 
         tds = soup.find_all("td")
         count = 0
-        for tr in tds:
-            if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
-            soup.find("tr")
-            file = open("ViewStaff.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
-            count += 1
-            if count == 16:
-                # print('')
-                count = 0
-                file = open("ViewStaff.txt", "a")
-                file.write('\n')
-                file.close()
-        group_no += 1
+        view_staff_file(tds, count, file_path, group, group_no, soup)
     group = "Pro"
     for group_no in range(1, 26):
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
@@ -203,45 +163,7 @@ def view_staff():
 
         tds = soup.find_all("td")
         count = 0
-        for tr in tds:
-            if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
-            soup.find("tr")
-            file = open("ViewStaff.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
-            count += 1
-            if count == 16:
-                # print('')
-                count = 0
-                file = open("ViewStaff.txt", "a")
-                file.write('\n')
-                file.close()
-        group_no += 1
+        view_staff_file(tds, count, file_path, group, group_no, soup)
     group = "Master"
     for group_no in range(1, 6):
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
@@ -253,45 +175,7 @@ def view_staff():
 
         tds = soup.find_all("td")
         count = 0
-        for tr in tds:
-            if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
-            soup.find("tr")
-            file = open("ViewStaff.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
-            count += 1
-            if count == 16:
-                # print('')
-                count = 0
-                file = open("ViewStaff.txt", "a")
-                file.write('\n')
-                file.close()
-        group_no += 1
+        view_staff_file(tds, count, file_path, group, group_no, soup)
     group = "Elite"
     for group_no in range(1, 2):
         url = "https://gpro.net/pl/ViewStaff.asp?group={} - {}"\
@@ -303,45 +187,7 @@ def view_staff():
 
         tds = soup.find_all("td")
         count = 0
-        for tr in tds:
-            if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("ViewStaff.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
-            soup.find("tr")
-            file = open("ViewStaff.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
-            count += 1
-            if count == 16:
-                # print('')
-                count = 0
-                file = open("ViewStaff.txt", "a")
-                file.write('\n')
-                file.close()
-        group_no += 1
+        view_staff_file(tds, count, file_path, group, group_no, soup)
 
 
 def rich():

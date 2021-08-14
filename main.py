@@ -10,7 +10,7 @@ def best_cars():
     file_path = pathlib.Path("BestCars.csv")
     try:
         with file_path.open(mode="w") as file:
-            file.write(f"{sezon},{wyscig},Poz.,Grupa,lvl")
+            file.write(f"Sezon,Wyścig,Poz.,Grupa,lvl")
     except OSError:
         logging.error("Error11")
     url = "https://gpro.net/pl/Stats.asp?type=bestcars&Page=1"

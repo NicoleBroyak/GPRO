@@ -6,13 +6,11 @@ import logging
 
 
 def best_cars():
-    season = "83"
-    race = "3"
     lvl = 0
     file_path = pathlib.Path("BestCars.csv")
     try:
         with file_path.open(mode="w") as file:
-            file.write("")
+            file.write(f"{sezon},{wyscig},Poz.,Grupa,lvl")
     except OSError:
         logging.error("Error11")
     url = "https://gpro.net/pl/Stats.asp?type=bestcars&Page=1"
@@ -42,7 +40,7 @@ def best_cars():
                 count += 1
                 try:
                     with file_path.open(mode="a") as file:
-                        file.write(f"{season}")
+                        file.write(f"{sezon},")
                 except OSError:
                     logging.error("Error")
             if count == 1:
@@ -50,13 +48,14 @@ def best_cars():
                 count += 1
                 try:
                     with file_path.open(mode="a") as file:
-                        file.write(f"{race}")
+                        file.write(f"{wyscig},")
                 except OSError:
                     logging.error("Error")
             if count <= 5:
                 try:
                     with file_path.open(mode="a", encoding="utf-8") as file:
                         file.write(tr.text.strip())
+                        print(type(tr))
                         if count != 4:
                             file.write(",")
                 except OSError:
@@ -869,6 +868,8 @@ def analiza():
     file.write(soup.text.strip())
     file.close()
 
+sezon = input("Wpisz nr sezonu")
+wyscig = input("Wpisz nr wyscigu")
 konsola = 1
 while konsola != "0":
     konsola = input("Wpisz komende\n[1] RichDad\n[2] BestFans\

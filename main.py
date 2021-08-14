@@ -10,7 +10,7 @@ def best_cars():
     file_path = pathlib.Path("BestCars.csv")
     try:
         with file_path.open(mode="w") as file:
-            file.write(f"Sezon,Wyścig,Poz.,Grupa,lvl\n")
+            file.write(f"Sezon,Wyścig,Poz.,Nazwisko,Grupa,lvl\n")
     except OSError:
         logging.error("Error11")
     url = "https://gpro.net/pl/Stats.asp?type=bestcars&Page=1"
@@ -53,7 +53,7 @@ def best_cars():
                     logging.error("Error")
             if count <= 5:
                 try:
-                    with file_path.open(mode="a", encoding="utf-8") as file:
+                    with file_path.open(mode="a", encoding="utf_8") as file:
                         file.write(tr.text.strip())
                         if count != 4:
                             file.write(",")

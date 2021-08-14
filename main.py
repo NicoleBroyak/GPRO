@@ -3,6 +3,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import pathlib
 import logging
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 def view_staff_file(tds, count, file_path, group, group_no, soup):
@@ -18,7 +19,8 @@ def view_staff_file(tds, count, file_path, group, group_no, soup):
         if count > 1:
             try:
                 with file_path.open(mode="a", encoding="utf-8") as file:
-                        file.write(f"{tr.text.strip()}")
+                    file.write(tr.text.strip().replace(".", "").
+                               replace("$", ""))
             except OSError:
                 logging.error("Error")
             if count != 11:
@@ -93,8 +95,8 @@ def best_cars():
                 except OSError:
                     logging.error("Error")
             if count == 6:
-                imgs = tr.find_all("img")
-                for imgs in tr:
+                tr.find_all("img")
+                for _ in tr:
                     lvl += 1
                 lvl -= 2
                 try:
@@ -112,7 +114,7 @@ def best_cars():
                 except OSError:
                     logging.error("Error")
                 count = 0
-        print(f"Pobieranie strony bestcars.asp nr {page_no}/{max_pageno - 1}")
+        print(f"Pobieranie najlepszych bolidów str {page_no}/{max_pageno - 1}")
         page_no += 1
         countall = 0
 
@@ -125,8 +127,9 @@ def view_staff():
         with file_path.open(mode="w") as file:
             file.write('Sezon,Wyścig,Grupa,'
                        'Nazwisko menadżera,Nazwisko '
-               'kierowcy,OW,Pensja,Długość,Nazwisko dyr technicznego,OW,'
-               'Pensja,Długość,OW Personelu\n')
+                       'kierowcy,OW,Pensja,Długość,Nazwisko dyr te'
+                       'chnicznego,OW,'
+                       'Pensja,Długość,OW Personelu\n')
     except OSError:
         logging.error("Error")
     for group_no in range(1, 151):
@@ -229,8 +232,8 @@ def rich():
             if count == 3:
                 try:
                     with file_path.open(mode="a") as file:
-                        file.write(tr.text.strip().replace(".","").\
-                                   replace("$",""))
+                        file.write(tr.text.strip().replace(".", "").
+                                   replace("$", ""))
                 except OSError:
                     logging.error("Error")
             else:
@@ -254,17 +257,18 @@ def rich():
                 except OSError:
                     logging.error("Error")
                 count = 0
-        print(f"Pobieranie strony rich.asp nr {page_no}/{max_pageno - 1}")
+        print(f"Pobieranie budżetów str {page_no}/{max_pageno - 1}")
         page_no += 1
         countall = 0
 
 
 def expenses():
-    season = "83"
-    race = "3"
-    file = open("Expenses.txt", "w")
-    file.write("")
-    file.close()
+    file_path = pathlib.Path("Expenses.csv")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write(f"Sezon,Wyścig,Poz.,Nazwisko,Grupa,Budżet\n")
+    except OSError:
+        logging.error("Error")
     url = "https://gpro.net/pl/Stats.asp?type=mostcost&Page=1"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -275,8 +279,9 @@ def expenses():
     count = 0
     countall = 0
     for page_no in range(1, max_pageno):
-        url = "https://gpro.net/pl/Stats.asp?type=" \
-              "mostcost&Page={}".format(page_no)
+        url = str(f"""
+                    https://gpro.net/pl/Stats.asp?type=mostcost&Page={page_no}
+                    """)
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "html.parser")
         tbs = soup.find(id="Table16")
@@ -285,31 +290,43 @@ def expenses():
             if countall < 4:
                 countall += 1
                 continue
-            tbs.find("tr")
             if count == 0:
-                # print(season + '\t')
-                count += 1
-                file = open("Expenses.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("Expenses.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            file = open("Expenses.txt", "a")
-            file.write(tr.text.strip())
-            file.write("\t")
-            file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},")
+                except OSError:
+                    logging.error("Error")
+            tbs.find("tr")
+            if count == 3:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(tr.text.strip().replace(".", "").
+                                   replace("$", ""))
+                except OSError:
+                    logging.error("Error")
+            else:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(tr.text.strip())
+                except OSError:
+                    logging.error("Error")
+            if count != 3:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(",")
+                except OSError:
+                    logging.error("Error")
             count += 1
             countall += 1
-            if count == 6:
-                file = open("Expenses.txt", "a")
-                file.write("\n")
-                file.close()
+            if count == 4:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
                 count = 0
-        print(page_no)
+        print(f"Pobieranie wydatków str {page_no}/{max_pageno - 1}")
         page_no += 1
         countall = 0
 
@@ -621,24 +638,29 @@ def man_sponsors():
                 file.close()
         group_no += 1
 
+
 def money_levels():
     group = "Elite"
-    season = "83"
-    race = "3"
     group_no = 1
-    file = open("MoneyLevels.txt", "w")
+    file_path = pathlib.Path("MoneyLevels.csv")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write("Sezon,Wyścig,Grupa,Nazwisko,Budżet,Poziom samochodu"
+                       ",Dopasowanie,Punkty\n")
+    except OSError:
+        logging.error("Error")
     user = input("User")
     password = input("Pass")
     driver = input("[F] - Firefox, [C] - Chrome")
     if driver == "F":
-        driver = webdriver.Firefox()
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager().
+                                   install())
     if driver == "C":
         driver = webdriver.Chrome()
     driver.get("https://gpro.net/pl/Login.asp?Redirect=MoneyLevels.asp")
     driver.find_element_by_name("textLogin").send_keys(user)
     driver.find_element_by_name("textPassword").send_keys(password)
     driver.find_element_by_name("LogonFake").click()
-    file.close()
     for group_all in range(1, 262):
         with open('page.html', 'w') as f:
             f.write(driver.page_source)
@@ -650,43 +672,37 @@ def money_levels():
         count = 0
         for tr in tds:
             if count == 0:
-                # print(season + '\t')
                 count += 1
-                file = open("MoneyLevels.txt", "a")
-                file.write('{}\t'.format(season))
-                file.close()
-            if count == 1:
-                # print(race + '\t')
-                count += 1
-                file = open("MoneyLevels.txt", "a")
-                file.write('{}\t'.format(race))
-                file.close()
-            if count == 2:
-                # print("{} \t".format(group))
-                count += 1
-                file = open("MoneyLevels.txt", "a")
-                file.write('{}\t'.format(group))
-                file.close()
-            if count == 3:
-                # print("{} \t".format(group_no))
-                count += 1
-                file = open("MoneyLevels.txt", "a")
-                file.write('{}\t'.format(group_no))
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(
+                            f"{sezon},{wyscig}.{dane},{group} - {group_no},")
+                except OSError:
+                    logging.error("Error")
             soup.find("tr")
-            file = open("MoneyLevels.txt", "a")
-            file.write(tr.text.strip())
-            file.write('\t')
-            file.close()
-            # print(tr.text.strip(), end='\t')
+            if count != 1 and count != 4:
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write(tr.text.strip().replace(".", "").
+                                   replace("$", ""))
+                except OSError:
+                    logging.error("Error")
+                if count != 8 and count != 7:
+                    try:
+                        with file_path.open(mode="a") as file:
+                            file.write(",")
+                    except OSError:
+                        logging.error("Error")
             count += 1
-            if count == 12:
-                # print('')
+            if count == 9:
                 count = 0
-                file = open("MoneyLevels.txt", "a")
-                file.write('\n')
-                file.close()
+                try:
+                    with file_path.open(mode="a") as file:
+                        file.write("\n")
+                except OSError:
+                    logging.error("Error")
         group_no += 1
+        group_all += 1
         if group_all == 1:
             group = "Master"
             group_no = 1
@@ -701,6 +717,7 @@ def money_levels():
             group_no = 1
         driver.find_element_by_class_name("next").click()
 
+
 def analiza():
     user = input("User")
     password = input("Pass")
@@ -709,10 +726,8 @@ def analiza():
     driver.find_element_by_name("textLogin").send_keys(user)
     driver.find_element_by_name("textPassword").send_keys(password)
     driver.find_element_by_name("LogonFake").click()
-    file = open("page.html", "w")
     with open('page.html', 'w') as file:
         file.write(driver.page_source)
-        file.close
     p = open('page.html', 'r')
     page = p.read()
     soup = BeautifulSoup(page, "html.parser")
@@ -726,6 +741,7 @@ def analiza():
     file = open("Analiza1.txt", "a")
     file.write(soup.text.strip())
     file.close()
+
 
 sezon = input("Wpisz nr sezonu")
 wyscig = input("Wpisz nr wyscigu")

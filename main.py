@@ -430,9 +430,6 @@ mainsoup = BeautifulSoup(mainpage.content, "html.parser")
 racebar = mainsoup.find(id="racebar").text.strip()
 season = racebar[23:25]
 race = racebar[34:36].replace(":", "")
-datatime = input("Wpisz moment zapisywania danych [1]"
-                 " Po resecie\n[2] Po rynku\n[3] Po kwalifikacjach"
-                 "\n[x] inny (wpisz zamiast x)\n:")
 mode_type = input("Wpisz [1] aby wybrać zakres grup np. od [E] do [R150]\n"
                   "inna wartość = tryb domyślny (od [E] do [P25])")
 mode_type1 = "E"
@@ -441,6 +438,7 @@ if mode_type == "1":
     mode_type1 = input("Wpisz grupę startową")
     mode_type2 = input("Wpisz grupę końcową")
 konsola = 1
+base_dir = os.getcwd()
 os.mkdir(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")
 mkdir = str(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")
 os.chdir(base_dir + f"/{mkdir}")

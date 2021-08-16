@@ -1,9 +1,13 @@
+import time
+
 import requests
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pathlib
 import logging
 from webdriver_manager.firefox import GeckoDriverManager
+import os
+import shutil
 
 
 def group_scrap(_):
@@ -20,12 +24,26 @@ def group_scrap(_):
     return group
 
 
-def rich_or_exp_scrap(string, file_path, max_pageno):
+def group_scrap_mode_type(_):
+    if _ in range(112, 262):
+        group = "R"
+    if _ in range(32, 112):
+        group = "A"
+    if _ in range(7, 32):
+        group = "P"
+    if _ in range(2, 7):
+        group = "M"
+    if _ == 1:
+        group = "E"
+    return group
+
+
+def rich_or_exp_scrap(string, file_path, max_pageno, scraptype):
     count = 0
     countall = 0
     for page_no in range(1, max_pageno):
-        url = str(f"https://gpro.net/pl/Stats.asp?type=ric"
-                  f"hmanagers&Page={page_no}")
+        url = str(f"https://gpro.net/pl/Stats.asp?type={scraptype}&P"
+                  f"age={page_no}")
         page = requests.get(url)
         soup = BeautifulSoup(page.content, "html.parser")
         tbs = soup.find(id="Table16")
@@ -35,7 +53,7 @@ def rich_or_exp_scrap(string, file_path, max_pageno):
                 countall += 1
                 continue
             if count == 0:
-                write("a", f"{sezon},{wyscig}.{dane},", file_path)
+                write("a", f"{season},{race}.{datatime},", file_path)
             tbs.find("tr")
             if count == 1:
                 s = str(tr.text.strip())
@@ -61,7 +79,7 @@ def rich_or_exp_scrap(string, file_path, max_pageno):
 
 def write(mode, string, file_path):
     try:
-        with file_path.open(mode=mode, encoding="utf-8") as file:
+        with open(file_path, mode=mode, encoding="utf-8") as file:
             file.write(string)
     except OSError:
         logging.error("Error")
@@ -93,7 +111,7 @@ def best_cars_scrap(file_path, max_pageno):
             tbs.find("tr")
             if count == 0:
                 count += 1
-                write("a", f"{sezon},{wyscig}.{dane},", file_path)
+                write("a", f"{season},{race}.{datatime},", file_path)
             if count == 2:
                 s = str(tr.text.strip())
                 text_without_digits = ''.join(
@@ -121,20 +139,24 @@ def best_cars_scrap(file_path, max_pageno):
 
 
 def man_spons_scrap(file_path):
-    for _ in range(1, 262):
+    groupsall = group_dict[mode_type2] - group_dict[mode_type1] + 1
+    countgroupcalc = 1
+    for _ in range(group_dict[mode_type1], group_dict[mode_type2] + 1):
         group = group_scrap(_)
         if _ == 1 or _ == 2 or _ == 7 or _ == 32 or _ == 112:
             group_no = 1
         url = f"https://gpro.net/pl/ManSponsors.asp?group={group} - {group_no}"
         page = requests.get(url)
-        print(f"[SPONSORZY] Pobieranie strony {group} - {group_no} {_}/261 "
-              f"Ukończono: {float(_ / 261 * 100).__round__(2)}%")
+        print(f"[SPONSORZY] Pobieranie strony {group} - {group_no} "
+              f"{countgroupcalc}/{group_dict[mode_type2]} "
+              f"Ukończono: "
+              f"{float((countgroupcalc / groupsall) * 100).__round__(2)}%")
         soup = BeautifulSoup(page.content, "html.parser")
         tds = soup.find_all("td")
         count = 0
         for tr in tds:
             if count == 0:
-                write("a", f"{sezon},{wyscig}.{dane},{group}"
+                write("a", f"{season},{race}.{datatime},{group}"
                            f" - {group_no},", file_path)
                 count += 4
             if 4 <= count <= 8 or count == 15:
@@ -158,24 +180,29 @@ def man_spons_scrap(file_path):
                 write("a", "\n", file_path)
                 count = 0
         group_no += 1
+        countgroupcalc += 1
 
 
 def view_staff_scrap(file_path):
-    for _ in range(1, 262):
+    groupsall = group_dict[mode_type2] - group_dict[mode_type1] + 1
+    countgroupcalc = 1
+    for _ in range(group_dict[mode_type1], group_dict[mode_type2] + 1):
         group = group_scrap(_)
         if _ == 1 or _ == 2 or _ == 7 or _ == 32 or _ == 112:
             group_no = 1
         url = str(f"https://gpro.net/pl/ViewStaff.asp?group={group} "
                   f"- {group_no}")
         page = requests.get(url)
-        print(f"[PERSONEL] Pobieranie strony {group} - {group_no} {_}/261 "
-              f"Ukończono: {float(_/261*100).__round__(2)}%")
+        print(f"[PERSONEL] Pobieranie strony {group} - {group_no} "
+              f"{countgroupcalc}/{group_dict[mode_type2]} "
+              f"Ukończono: "
+              f"{float((countgroupcalc / groupsall) * 100).__round__(2)}%")
         soup = BeautifulSoup(page.content, "html.parser")
         tds = soup.find_all("td")
         count = 0
         for tr in tds:
             if count == 0:
-                write("a", f"{sezon},{wyscig}.{dane},{group} - {group_no},",
+                write("a", f"{season},{race}.{datatime},{group} - {group_no},",
                       file_path)
                 soup.find("tr")
             soup.find("tr")
@@ -193,21 +220,32 @@ def view_staff_scrap(file_path):
                 count = 0
                 write("a", "\n", file_path)
         group_no += 1
+        countgroupcalc += 1
 
 
 def best_cars():
-    file_path = pathlib.Path("BestCars.csv")
+    file_path = os.getcwd() + "/BestCarsBase.csv"
+    file_path2 = os.getcwd() + "/BestCars.csv"
+    write("w", "", file_path2)
     write("w", f"Sezon,Wyścig,Poz.,Nazwisko,Grupa,lvl\n", file_path)
     url = "https://gpro.net/pl/Stats.asp?type=bestcars&Page=1"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     max_pageno = max_page(soup)
     best_cars_scrap(file_path, max_pageno)
+    rookie_del = "Rookie"
+    ama_del = "Amateur"
+    with open("BestCarsBase.csv") as oldfile, open("BestCars.csv", 'w') \
+            as newfile:
+        for line in oldfile:
+            if rookie_del not in line and ama_del not in line:
+                newfile.write(line)
+    os.remove("BestCarsBase.csv")
 
 
 def view_staff():
 
-    file_path = pathlib.Path("ViewStaff.csv")
+    file_path = os.getcwd() + "/Staff.csv"
     write("w", 'Sezon,Wyścig,Grupa,Nazwisko menadżera,Nazwisko kierowcy,OW,'
                'Pensja,Długość,Nazwisko dyrtechnicznego,OW,Pensja,Długość,'
                'OW Personelu\n', file_path)
@@ -215,34 +253,56 @@ def view_staff():
 
 
 def rich():
-    file_path = pathlib.Path("Rich.csv")
+    file_path = os.getcwd() + "/RichBase.csv"
+    file_path2 = os.getcwd() + "/Rich.csv"
+    write("w", "", file_path2)
     write("w", "Sezon,Wyścig,Poz,Nazwisko,Grupa,Budżet\n", file_path)
     urlbase = "https://gpro.net/pl/Stats.asp?type=richmanagers&Page=1"
     page = requests.get(urlbase)
     soup = BeautifulSoup(page.content, "html.parser")
     max_pageno = max_page(soup)
-    rich_or_exp_scrap("BUDŻETY", file_path, max_pageno)
+    scraptype = "richmanagers"
+    rich_or_exp_scrap("BUDŻETY", file_path, max_pageno, scraptype)
+    rookie_del = "Rookie"
+    ama_del = "Amateur"
+    with open("RichBase.csv") as oldfile, open("Rich.csv", 'w') \
+            as newfile:
+        for line in oldfile:
+            if rookie_del not in line and ama_del not in line:
+                newfile.write(line)
+    os.remove("RichBase.csv")
 
 
 def expenses():
-    file_path = pathlib.Path("Expenses.csv")
-    write("w", "Sezon,Wyścig,Nazwisko,Grupa,Wydatki\n", file_path)
+    file_path = os.getcwd() + "/ExpensesBase.csv"
+    file_path2 = os.getcwd() + "/Expenses.csv"
+    write("w", "Sezon,Wyścig,Poz.,Nazwisko,Grupa,Wydatki\n", file_path)
+    write("w", "", file_path2)
     url = "https://gpro.net/pl/Stats.asp?type=mostcost&Page=1"
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     max_pageno = max_page(soup)
-    rich_or_exp_scrap("WYDATKI", file_path, max_pageno)
+    scraptype = "mostcost"
+    rich_or_exp_scrap("WYDATKI", file_path, max_pageno, scraptype)
+    rookie_del = "Rookie"
+    ama_del = "Amateur"
+    with open("ExpensesBase.csv") as oldfile, \
+            open("Expenses.csv", "w") as newfile:
+        for line in oldfile:
+            if rookie_del not in line and ama_del not in line:
+                newfile.write(line)
+    os.remove("ExpensesBase.csv")
 
 
 def man_sponsors():
-    file_path = pathlib.Path("ManSponsors.csv")
+    file_path = os.getcwd() + "/ManSponsors.csv"
     write("w", "Sezon,Wyścig,Grupa,Nazwisko,Sponsor,Finanse,Oczekiwania,"
           "Cierpliwość,Reputacja,Wizerunek,Negocjacje,Czastrwania\n", file_path)
     man_spons_scrap(file_path)
 
 
 def money_levels():
-    file_path = pathlib.Path("MoneyLevels.csv")
+    file_path = os.getcwd() + "/MoneyLevels.csv"
     write("w", "Sezon,Wyścig,Grupa,Nazwisko,Budżet,Poziom samochodu"
           ",Dopasowanie,Punkty\n", file_path)
     user = input("User:\n")
@@ -257,13 +317,18 @@ def money_levels():
     driver.find_element_by_name("textLogin").send_keys(user)
     driver.find_element_by_name("textPassword").send_keys(password)
     driver.find_element_by_name("LogonFake").click()
-    for _ in range(1, 262):
+    groupsall = group_dict[mode_type2] - group_dict[mode_type1] + 1
+    groupsall = (groupsall * 100)
+    countgroupcalc = 1
+    for _ in range(group_dict[mode_type1], group_dict[mode_type2] + 1):
 
         group = group_scrap(_)
         if _ == 1 or _ == 2 or _ == 7 or _ == 32 or _ == 112:
             group_no = 1
-        print(f"[MONEYLEVELS] Pobieranie strony {group} - {group_no} {_}/261 "
-              f"Ukończono: {float(_ / 261 * 100).__round__(2)}%")
+        print(f"[MONEYLEVELS] Pobieranie strony {group} - {group_no} "
+              f"{countgroupcalc}/{group_dict[mode_type2]} "
+              f"Ukończono: "
+              f"{float(countgroupcalc / groupsall * 100).__round__(2)}%")
         with open('page.html', 'w') as f:
             f.write(driver.page_source)
         p = open('page.html', 'r')
@@ -275,7 +340,7 @@ def money_levels():
         for tr in tds:
             if count == 0:
                 count += 1
-                write("a", f"{sezon},{wyscig}.{dane},{group}"
+                write("a", f"{season},{race}.{datatime},{group}"
                            f" - {group_no},", file_path)
             soup.find("tr")
             if count != 1 and count != 4:
@@ -295,7 +360,10 @@ def money_levels():
                 write("a", "\n", file_path)
         group_no += 1
         _ += 1
+        countgroupcalc += 1
         driver.find_element_by_class_name("next").click()
+    driver.close()
+    os.remove("page.html")
 
 
 def analiza():
@@ -323,12 +391,32 @@ def analiza():
     file.close()
 
 
-sezon = input("Wpisz nr sezonu")
-wyscig = input("Wpisz nr wyscigu")
-dane = input("Wpisz moment zapisywania danych [1]"
-             " Po rynku\n[2] Po kwalach\n[3] Po resecie"
-             "\n[x] inny (wpisz zamiast x)\n:")
+base_dir = os.getcwd()
+group_dict = {}
+allgroups = 1
+for count_dict in range(1, 262):
+    group_code = group_scrap_mode_type(count_dict)
+    if count_dict == 1:
+        group_dict[group_code] = count_dict
+    else:
+        group_dict[(group_code + str(allgroups))] = count_dict
+    allgroups += 1
+    count_dict += 1
+    if count_dict == 2 or count_dict == 7 or \
+       count_dict == 32 or count_dict == 112:
+        allgroups = 1
+season = "83"
+race = input("Wpisz numer wyścigu")
+datatime = input("Wpisz moment zapisywania danych [1]"
+                 " Po rynku\n[2] Po kwalach\n[3] Po resecie"
+                 "\n[x] inny (wpisz zamiast x)\n:")
+mode_type1 = input("Wpisz grupę startową")
+mode_type2 = input("Wpisz grupę końcową")
 konsola = 1
+os.mkdir(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")
+mkdir = str(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")
+os.chdir(base_dir + f"/{mkdir}")
+newdir = os.getcwd()
 while konsola != "0":
     konsola = input("Wpisz komende:\n[1] RichDad\t[2] BestFans"
                     "\t[3] Wydatki\n[4] Personel\t[5] MoneyLevels\t"
@@ -363,3 +451,8 @@ while konsola != "0":
         man_sponsors()
         view_staff()
 print("Koniec programu")
+os.chdir(base_dir)
+shutil.make_archive(pathlib.Path(f"{mkdir}").absolute()
+                    .as_posix(), "zip", pathlib.Path(f"{mkdir}")
+                    .absolute().as_posix())
+shutil.rmtree(mkdir, ignore_errors=True)

@@ -408,10 +408,15 @@ for count_dict in range(1, 262):
 season = "83"
 race = input("Wpisz numer wyścigu")
 datatime = input("Wpisz moment zapisywania danych [1]"
-                 " Po rynku\n[2] Po kwalach\n[3] Po resecie"
+                 " Po rynku\n[2] Po kwalifikacjach\n[3] Po resecie"
                  "\n[x] inny (wpisz zamiast x)\n:")
-mode_type1 = input("Wpisz grupę startową")
-mode_type2 = input("Wpisz grupę końcową")
+mode_type = input("Wpisz [1] aby wybrać zakres grup np. od [E] do [R150]\n"
+                  "inna wartość = tryb domyślny (od [E] do [P25])")
+mode_type1 = "E"
+mode_type2 = "P25"
+if mode_type == "1":
+    mode_type1 = input("Wpisz grupę startową")
+    mode_type2 = input("Wpisz grupę końcową")
 konsola = 1
 os.mkdir(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")
 mkdir = str(f"S{season}_R{race}_N{datatime}___{time.strftime('%d_%m___%H%M')}")

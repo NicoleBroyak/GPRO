@@ -405,10 +405,14 @@ for count_dict in range(1, 262):
     if count_dict == 2 or count_dict == 7 or \
        count_dict == 32 or count_dict == 112:
         allgroups = 1
-season = "83"
-race = input("Wpisz numer wyścigu")
+mainurl = "https://gpro.net"
+mainpage = requests.get(mainurl)
+mainsoup = BeautifulSoup(mainpage.content, "html.parser")
+racebar = mainsoup.find(id="racebar").text.strip()
+season = racebar[23:25]
+race = racebar[34:36].replace(":", "")
 datatime = input("Wpisz moment zapisywania danych [1]"
-                 " Po rynku\n[2] Po kwalifikacjach\n[3] Po resecie"
+                 " Po resecie\n[2] Po rynku\n[3] Po kwalifikacjach"
                  "\n[x] inny (wpisz zamiast x)\n:")
 mode_type = input("Wpisz [1] aby wybrać zakres grup np. od [E] do [R150]\n"
                   "inna wartość = tryb domyślny (od [E] do [P25])")

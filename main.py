@@ -1,4 +1,6 @@
+import datetime
 import time
+from datetime import date
 
 import requests
 from selenium import webdriver
@@ -391,9 +393,26 @@ def analiza():
     file.close()
 
 
-base_dir = os.getcwd()
+datenow = datetime.datetime.now()
+weekday = date.isoweekday(datenow)
+strdatenow = str(datenow)
+hour = int(strdatenow[11:13])
+minute = strdatenow[14:16]
 group_dict = {}
 allgroups = 1
+if weekday == 2 or weekday == 5:
+    if hour in range(19, 22):
+        datatime = "3"
+    if hour in range(22, 24):
+        datatime = "1"
+    else:
+        datatime = f"{strdatenow[5:]}"
+else:
+    datatime = f"{strdatenow[5:]}"
+if weekday == 1 or weekday == 4 and hour in range(19, 21):
+    datatime = "2"
+else:
+    datatime = f"{strdatenow[5:]}"
 for count_dict in range(1, 262):
     group_code = group_scrap_mode_type(count_dict)
     if count_dict == 1:

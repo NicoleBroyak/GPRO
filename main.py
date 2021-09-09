@@ -7,7 +7,6 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import pathlib
 import logging
-from webdriver_manager.firefox import GeckoDriverManager
 import os
 import shutil
 
@@ -307,14 +306,14 @@ def money_levels():
     file_path = os.getcwd() + "/MoneyLevels.csv"
     write("w", "Sezon,Wyścig,Grupa,Nazwisko,Budżet,Poziom samochodu"
           ",Dopasowanie,Punkty\n", file_path)
-    user = input("User:\n")
-    password = input("Pass:\n")
-    driver = input("[F] - Firefox, [C] - Chrome:\n")
-    if driver == "F":
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().
-                                   install())
-    if driver == "C":
-        driver = webdriver.Chrome()
+    user = "NeilLight"
+    password = "GPRO2137"
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--window-size=800,800')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome()
     driver.get("https://gpro.net/pl/Login.asp?Redirect=MoneyLevels.asp")
     driver.find_element_by_name("textLogin").send_keys(user)
     driver.find_element_by_name("textPassword").send_keys(password)

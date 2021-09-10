@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+import datetime
+import time
+from datetime import date
+
+import requests
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import pathlib
+import logging
+from webdriver_manager.firefox import GeckoDriverManager
+import os
+import shutil
+
+[requires]
+python_version = "3.9"
